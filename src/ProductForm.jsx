@@ -16,7 +16,7 @@ const ProductForm = () => {
     brand: "",
     sku: "",
     rating: "",
-    images: ["", ""], // Images array with placeholders for two URLs
+    images: ["", ""],
   });
 
   const api = axios.create({
@@ -107,9 +107,14 @@ const ProductForm = () => {
         value={formData.name}
         onChange={handleInputChange}
         style={{
-          gridColumn: "1 / span 2",
           padding: "10px",
-          marginBottom: "10px",
+          borderRadius: "5px",
+          border: "1px solid #ccc",
+          fontSize: "16px",
+          width: "100%",
+          boxSizing: "border-box",
+          outline: "none",
+          transition: "border-color 0.3s ease-in-out",
         }}
       />
       <input
