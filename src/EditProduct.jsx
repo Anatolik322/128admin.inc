@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const EditProductForm = () => {
 	const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ const EditProductForm = () => {
 		sku: "",
 		images: [""],
 	});
+	const [categories, setCategories] = useState([]);
 	const { id } = useParams();
 	console.log(id);
 
@@ -34,7 +35,16 @@ const EditProductForm = () => {
 				console.error(error);
 			}
 		};
-
+		const fetchCategories = async () => {
+			try {
+				const { data } = await axios.get(`https://128autoapi.vercel.app/items/categories`);
+				setCategories(data);
+			} catch (error) {
+				toast.error("Не вдалося завантажити дані товару");
+				console.error(error);
+			}
+		};
+		fetchCategories();
 		fetchProduct();
 	}, [id]);
 
@@ -62,8 +72,18 @@ const EditProductForm = () => {
 
 	return (
 		<div>
-			<header className="h-fit w-full bg-white border-b drop-shadow-md mb-6 py-3 px-3 flex flex-row">
-				<img src="/logo.png" alt="" className="h-[60px]" />
+			<header className="h-fit w-full bg-white border-b drop-shadow-md mb-6 py-3 px-3 flex flex-row items-center gap-12">
+				<Link to={"/"}>
+					<img src="/logo.png" alt="" className="h-[60px]" />{" "}
+				</Link>
+				<div className="flex flex-row gap-3">
+					<Link to={"/"}>
+						<span>Товари</span>
+					</Link>
+					<Link to={"/orders"}>
+						<span>Замовлення</span>
+					</Link>
+				</div>
 			</header>
 			<div className=" grid grid-cols-2 gap-3 mx-10 ">
 				<img src={formData.images[0]} alt="alt" className="h-[300px] ml-[150px] mt-[150px]" />
@@ -88,30 +108,27 @@ const EditProductForm = () => {
 							onChange={handleInputChange}
 							className="input-field col-span-2 h-[250px]"
 						/>
-						<input
-							type="text"
-							name="category"
-							placeholder="Категорія"
-							value={formData.category}
-							onChange={handleInputChange}
-							className="input-field"
-						/>
-						<input
-							type="text"
-							name="categoryUkr"
-							placeholder="Категорія (укр)"
-							value={formData.categoryUkr}
-							onChange={handleInputChange}
-							className="input-field"
-						/>
-						<input
-							type="number"
-							name="stock"
-							placeholder="Кількість на складі"
-							value={formData.stock}
-							onChange={handleInputChange}
-							className="input-field"
-						/>
+						<select name="category" value={formData.category} onChange={handleInputChange} className="input-field">
+							<option value="" disabled>
+								Select Category
+							</option>
+							{categories.map((item) => (
+								<option key={item.category} value={item.category}>
+									{item.category}
+								</option>
+							))}
+						</select>
+						<select name="categoryUkr" value={formData.categoryUkr} onChange={handleInputChange} className="input-field">
+							<option value="" disabled>
+								Виберіть категорію
+							</option>
+							{categories.map((item) => (
+								<option key={item.categoryUkr} value={item.categoryUkr}>
+									{item.categoryUkr}
+								</option>
+							))}
+						</select>
+						<input type="number" name="stock" placeholder="Дроп ціна" value={formData.stock} onChange={handleInputChange} className="input-field" />
 						<input type="text" name="brand" placeholder="Бренд" value={formData.brand} onChange={handleInputChange} className="input-field" />
 						<input
 							type="number"

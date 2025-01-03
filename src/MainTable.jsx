@@ -30,15 +30,20 @@ const MainTable = () => {
 		setShowwnData(data?.items);
 	};
 
-	useEffect(() => {
-		console.log(shownData);
-		console.log(data);
-	}, [shownData, data]);
-
 	return (
 		<div className="relativ0e">
-			<header className="h-fit w-full bg-white border-b drop-shadow-md mb-6 py-3 px-3 flex flex-row">
-				<img src="/logo.png" alt="" className="h-[60px]" />
+			<header className="h-fit w-full bg-white border-b drop-shadow-md mb-6 py-3 px-3 flex flex-row items-center gap-12">
+				<Link to={"/"}>
+					<img src="/logo.png" alt="" className="h-[60px]" />{" "}
+				</Link>
+				<div className="flex flex-row gap-3">
+					<Link to={"/"}>
+						<span>Товари</span>
+					</Link>
+					<Link to={"/orders"}>
+						<span>Замовлення</span>
+					</Link>
+				</div>
 			</header>
 			<div className="p-4">
 				<div className="flex flex-row justify-around items-center">
@@ -60,7 +65,7 @@ const MainTable = () => {
 							className="bg-[#1B1B1B] text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 hover:bg-orange-600"
 							onClick={handleReset}
 						>
-							<span>Скинути</span>
+							<span>Х</span>
 						</button>
 					</div>
 					<Link to={"/add"}>
@@ -82,7 +87,9 @@ const MainTable = () => {
 							<th className=" px-4 py-2">Артикул</th>
 							<th className=" px-4 py-2">Фото</th>
 							<th className=" px-4 py-2">Назва</th>
+							<th className=" px-4 py-2">Дроп ціна</th>
 							<th className=" px-4 py-2">Ціна</th>
+							<th className=" px-4 py-2">Маржа</th>
 							<th className=" px-4 py-2">Посилання</th>
 						</tr>
 					</thead>
@@ -104,7 +111,9 @@ const MainTable = () => {
 										<img src={item.images[0]} alt="" className="w-[70px] mx-auto" />
 									</td>
 									<td className=" px-4 py-2 text-left pl-10">{item.name}</td>
+									<td className=" px-4 py-2">{item.stock} грн</td>
 									<td className=" px-4 py-2">{item.price} грн</td>
+									<td className=" px-4 py-2">{item.price - item.stock} грн</td>
 									<Link key={item._id} to={`/item/${item._id}`} className=" box-border w-full">
 										<td className="  px-4 py-2 my-auto">
 											<button className="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 hover:bg-orange-600">
@@ -181,6 +190,7 @@ const MainTable = () => {
 					<></>
 				)}
 			</div>
+			<div className="my-5">Загальна кількість {data && data?.totalItems}</div>
 		</div>
 	);
 };

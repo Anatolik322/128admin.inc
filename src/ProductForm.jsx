@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const ProductForm = () => {
 	const [formData, setFormData] = useState({
@@ -87,8 +88,18 @@ const ProductForm = () => {
 
 	return (
 		<div>
-			<header className="h-fit w-full bg-white border-b drop-shadow-md mb-6 py-3 px-3 flex flex-row">
-				<img src="/logo.png" alt="" className="h-[60px]" />
+			<header className="h-fit w-full bg-white border-b drop-shadow-md mb-6 py-3 px-3 flex flex-row items-center gap-12">
+				<Link to={"/"}>
+					<img src="/logo.png" alt="" className="h-[60px]" />{" "}
+				</Link>
+				<div className="flex flex-row gap-3">
+					<Link to={"/"}>
+						<span>Товари</span>
+					</Link>
+					<Link to={"/orders"}>
+						<span>Замовлення</span>
+					</Link>
+				</div>
 			</header>
 			<form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-3xl mx-auto">
 				<ToastContainer />
@@ -118,14 +129,7 @@ const ProductForm = () => {
 					onChange={handleInputChange}
 					className="input-field"
 				/>
-				<input
-					type="number"
-					name="stock"
-					placeholder="Кількість на складі"
-					value={formData.stock}
-					onChange={handleInputChange}
-					className="input-field"
-				/>
+				<input type="number" name="stock" placeholder="Дроп ціна" value={formData.stock} onChange={handleInputChange} className="input-field" />
 				<input type="text" name="brand" placeholder="Бренд" value={formData.brand} onChange={handleInputChange} className="input-field" />
 				<input
 					type="number"

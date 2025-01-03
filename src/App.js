@@ -3,6 +3,7 @@ import './App.css';
 import MainTable from './MainTable';
 import ProductForm from './ProductForm';
 import EditProductForm from './EditProduct';
+import Orders from './Orders';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainTable />} />
         <Route path="/add" element={<ProductForm />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="/item/:id" element={<EditProductForm productId={'66e1d36fc9f13231902ee191'} />} />
       </Routes>
     </div>
